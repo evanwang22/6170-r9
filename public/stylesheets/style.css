@@ -10,3 +10,7 @@ a {
 .note {
 	white-space: pre-wrap;
 }
+
+.author {
+	color: red;
+}

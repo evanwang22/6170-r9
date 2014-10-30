@@ -20,10 +20,16 @@ router.post('/', function(req, res) {
 	var notes_db = db.get('notes');
 	var title = req.body.title;
 	var text = req.body.text;
+	var author = "";
+
+	if (req.currentUser) {
+		author = req.currentUser.username;
+	}
 
 	notes_db.insert({
 		"title": title, 
-		"text": text
+		"text": text,
+		"author": author
 	}, function(err, note) {
 		if (err) {
 			res.render('error', {

