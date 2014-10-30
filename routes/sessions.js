@@ -8,13 +8,25 @@ router.get('/new', function(req, res) {
 });
 
 /* POST create session (login) */
-// Vulnerable to an injection attack
+// No longer vulnerable to an injection attack
 router.post('/', function(req, res) {
 	console.log(req.body);
+
+	// Sanitize username and password inputs
+	var username = req.body.username
+	if (typeof username === "object") {
+		username = JSON.stringify(username);
+	}
+
+	var password = req.body.password
+	if (typeof password === "object") {
+		password = JSON.stringify(password);
+	}
+
 	users = db.get('users');
 	users.findOne({
-		"username": req.body.username,
-		"password": req.body.password
+		"username": username,
+		"password": password
 	}, function (err, user) {
 		if (err) {
 			res.render('error', {
