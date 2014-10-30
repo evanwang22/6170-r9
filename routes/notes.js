@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/new', function(req, res) {
-	res.render('notes/new', {});
+	res.render('notes/new', {csrf: req.csrfToken() });
 });
 
 /* POST create new note */

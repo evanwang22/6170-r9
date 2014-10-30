@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var session = require('express-session');
+var csrf = require('csurf');
 
 var db = require('./db');
 var routes = require('./routes/index');
@@ -34,6 +35,8 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+app.use(csrf());
 
 // Authentication middleware
 // Check that the user's session passed in req.session is valid
