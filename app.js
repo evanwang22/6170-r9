@@ -4,9 +4,13 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var partials = require('express-partials');
+var session = require('express-session');
 
+var db = require('./db');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var sessions_controller = require('./routes/sessions');
 
 var app = express();
 
@@ -21,8 +25,38 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// All views rendered via layout.ejs as "body"
+app.use(partials());
+
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Authentication middleware
+// Check that the user's session passed in req.session is valid
+app.use(function(req, res, next) {
+    if (req.session.userId) {
+        var users = db.get('users');
+        users.findOne({
+            _id: req.session.userId
+        }, function(err, user) {
+            if (user) {
+                req.currentUser = user;
+            } else {
+                delete req.session.userId;
+            }
+            next();
+        });
+    } else {
+        next();
+    }
+});
+
 app.use('/', routes);
 app.use('/users', users);
+app.use('/sessions', sessions_controller);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
