@@ -1,0 +1,15 @@
+<div class="container">
+
+	<h3>All the notes</h3>
+
+	<a href="/notes/new" class="btn btn-default">New note</a>
+
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<% for (var i = 0; i < notes.length; i++) { %>
+			  	<h4><%= notes[i].title %></h4>
+			  	<p class="note"><%- notes[i].text %></p>
+			<% } %>
+		</div>
+	</div>
+</div>
